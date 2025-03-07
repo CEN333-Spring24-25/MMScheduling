@@ -1,4 +1,4 @@
-<h2>Drag and Drop Between Lists</h2>
+<h2>Drag and Drop Between Sections</h2>
 
 <div class="container" cdkDropListGroup> <!-- Wrap both lists in a group -->
   
@@ -6,8 +6,8 @@
   <div cdkDropList [cdkDropListData]="list1" class="drop-list"
        (cdkDropListDropped)="drop($event)">
     <h3>List 1</h3>
-    <div *ngFor="let item of list1" cdkDrag class="draggable-item">
-      {{ item }}
+    <div *ngFor="let section of list1" cdkDrag class="draggable-item">
+      {{ section.num }} - {{ section.course.title }} ({{ section.faculty.name }})  <!-- Display section details -->
     </div>
   </div>
 
@@ -15,8 +15,8 @@
   <div cdkDropList [cdkDropListData]="list2" class="drop-list"
        (cdkDropListDropped)="drop($event)">
     <h3>List 2</h3>
-    <div *ngFor="let item of list2" cdkDrag class="draggable-item">
-      {{ item }}
+    <div *ngFor="let section of list2" cdkDrag class="draggable-item">
+      {{ section.num }} - {{ section.course.title }} ({{ section.faculty.name }})  <!-- Display section details -->
     </div>
   </div>
 
