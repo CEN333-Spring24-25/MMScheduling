@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-
+import { CENProgramService } from './services/CENProgramService'
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
@@ -9,4 +9,8 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'MMScheduling';
+  constructor(cen: CENProgramService){
+    console.log(cen.getProgram());
+
+  } 
 }

@@ -8,6 +8,6 @@ export class Semester{
         this.major = major;
         this.type = type;
         this.num = num; 
-        this.courses = [];
+        this.courses = courses;
     }
 }
