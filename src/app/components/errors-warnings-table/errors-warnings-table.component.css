@@ -1,19 +1,25 @@
 .errors-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
     padding: 10px;
-    margin: 10px 0;
-  }
-  
-  
-  table {
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+table {
     width: 100%;
     border-collapse: collapse;
-  }
-  
-  th, td {
+}
+
+th, td {
     padding: 8px;
-    border: 1px solid black;
     text-align: left;
-  }
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
 
 .error {
     background-color: #ffdddd; /* Light red for errors */
@@ -24,5 +30,3 @@
     background-color: #fff8c4; /* Light yellow for warnings */
     color: #8a6d3b;
 }
-
-  
