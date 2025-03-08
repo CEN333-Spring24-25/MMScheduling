@@ -1,0 +1,57 @@
+<div class="section-needs-container">
+    <h2>Select Course to Add Sections</h2>
+  
+    <!-- Dropdown for selecting courses -->
+    <label for="courses">Choose a course:</label>
+    <select id="courses" (change)="onCourseSelect($event)">
+      <option *ngFor="let course of courses" [ngValue]="course">{{ course.title }}</option>
+    </select>
+  
+    <!-- If a course is selected, show number of sections input -->
+    <div *ngIf="selectedCourse">
+      <h3>Selected Course: {{ selectedCourse?.title }}</h3>
+      <label for="numSections">Number of Sections:</label>
+      <input
+        id="numSections"
+        type="number"
+        [(ngModel)]="numSections"
+        [min]="1"
+        [max]="10"
+        placeholder="Enter number of sections"
+      />
+  
+      <button (click)="onAddSections()">Add Sections</button>
+    </div>
+  
+    <!-- Show list of sections for creation -->
+    <div *ngIf="sections.length > 0">
+      <h3>Create Sections</h3>
+      <div *ngFor="let section of sections; let i = index">
+        <h4>Section {{ section.num }}</h4>
+        <!-- Dropdown for campus selection -->
+        <label for="campus{{ i }}">Choose campus:</label>
+        <select id="campus{{ i }}" [(ngModel)]="section.campus">
+          <option *ngFor="let campus of campuses" [value]="campus">{{ campus }}</option>
+        </select>
+  
+        <!-- Dropdown for faculty selection -->
+        <label for="faculty{{ i }}">Select Faculty:</label>
+        <select id="faculty{{ i }}" [(ngModel)]="section.faculty">
+          <option *ngFor="let faculty of facultyList" [ngValue]="faculty">{{ faculty.name }}</option>
+        </select>
+      </div>
+  
+      <button (click)="onAddToNeedsList()">Add Sections to Needs List</button>
+    </div>
+  
+    <!-- Show the added sections -->
+    <div *ngIf="needsList.length > 0">
+      <h3>Sections in Needs List</h3>
+      <ul>
+        <li *ngFor="let section of needsList">
+          {{ section.course.title }} - Section {{ section.num }} (Faculty: {{ section.faculty.name }}, Campus: {{ section.faculty.campus }})
+        </li>
+      </ul>
+    </div>
+  </div>
+  
