@@ -25,6 +25,7 @@ import { FilterPipe } from './filters/filter.pipe';
 import { FacultyLoadComponent } from './components/faculty-load/faculty-load.component';
 import { getDatabase, ref, get, update, set } from 'firebase/database';
 import { SlotsLoader } from './services/slotsLoader';
+import { ErrorsWarningsTableComponent } from './components/errors-warnings-table/errors-warnings-table.component';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,7 @@ import { SlotsLoader } from './services/slotsLoader';
     FormsModule,
     FilterPipe,
     FacultyLoadComponent,
+    ErrorsWarningsTableComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

@@ -1,0 +1,28 @@
+.errors-container {
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 8px;
+    border: 1px solid black;
+    text-align: left;
+  }
+
+.error {
+    background-color: #ffdddd; /* Light red for errors */
+    color: #a94442;
+}
+
+.warning {
+    background-color: #fff8c4; /* Light yellow for warnings */
+    color: #8a6d3b;
+}
+
+  

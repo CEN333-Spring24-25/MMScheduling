@@ -1,0 +1,22 @@
+<div class="errors-container">
+    <h3>Errors & Warnings</h3>
+    <table class="pure-table">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let error of errors" class="error">
+          <td>Error</td>
+          <td>{{ error }}</td>
+        </tr>
+        <tr *ngFor="let warning of warnings" class="warning">
+          <td>Warning</td>
+          <td>{{ warning }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
