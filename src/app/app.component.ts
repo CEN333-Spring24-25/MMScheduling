@@ -6,63 +6,73 @@ import { CENProgramService } from './services/CENProgramService';
 import { Course } from './data/course';
 import { Faculty } from './data/faculty';
 import { Section } from './data/section';
+import { Slot } from './data/slot';
+import { FilterPipe } from './filters/filter.pipe';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, DragDropModule,FormsModule],
+  imports: [CommonModule, DragDropModule, FormsModule, FilterPipe],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers:[FilterPipe]
 })
 export class AppComponent {
-
   selectedCourse: Course | null = null;
   numSections: number = 0;
   sections: Section[] = [];
   nums: string[] = ['1','2','3','4','5','6','7','51','52','53','54','55','56','57','22/66','33/77','44/88','55/99'];
-
-  campuses = ['Abu Dhabi', 'Al-Ain'];
+  campuses = ['AbuDhabi', 'AlAin'];
+  columnFilters = [{"campus":"AbuDhabi", "days":"MW"},
+                   {"campus":"AbuDhabi", "days":"TR"},
+                   {"campus":"AbuDhabi", "days":"F"},
+                   {"campus":"AlAin", "days":"MW"},
+                   {"campus":"AlAin", "days":"TR"},
+                   {"campus":"AlAin", "days":"F"}];                  
   needsList: Section[] = [];
   courses: Course[] = [
-  new Course('CEN320', 'Signals and Systems', 3),
-  new Course('CSC301', 'Data Structures and Algorithms', 3),
-  new Course('CSC305', 'Data Communications and Networks', 3),
-  new Course('CEN304', 'Electronic Devices and Circuits', 3),
-  new Course('CEN425', 'IoT: Applications & Networking', 3),
+    new Course('CEN320', 'Signals and Systems', 3),
+    new Course('CSC301', 'Data Structures and Algorithms', 3),
+    new Course('CSC305', 'Data Communications and Networks', 3),
+    new Course('CEN304', 'Electronic Devices and Circuits', 3),
+    new Course('CEN425', 'IoT: Applications & Networking', 3),
   ];
-  adslot1: Section[] = [];
-  adslot2: Section[] = [];
-  adslot3: Section[] = [];
-  adslot4: Section[] = [];
-  adslot5: Section[] = [];
-  adslot6: Section[] = [];
-  adslot7: Section[] = [];
-  adslot8: Section[] = [];
-  adslot9: Section[] = [];
-  adslot10: Section[] = [];
-  adslot11: Section[] = [];
-  adslot12: Section[] = [];
-  adslot13: Section[] = [];
-  adslot14: Section[] = [];
-  adslot15: Section[] = [];
-  adslot16: Section[] = [];
-  adslot17: Section[] = [];
-  aaslot1: Section[] = [];
-  aaslot2: Section[] = [];
-  aaslot3: Section[] = [];
-  aaslot4: Section[] = [];
-  aaslot5: Section[] = [];
-  aaslot6: Section[] = [];
-  aaslot7: Section[] = [];
-  aaslot8: Section[] = [];
-  aaslot9: Section[] = [];
-  aaslot10: Section[] = [];
-  aaslot11: Section[] = [];
-  aaslot12: Section[] = [];
-  aaslot13: Section[] = [];
-  aaslot14: Section[] = [];
-  aaslot15: Section[] = [];
-  aaslot16: Section[] = [];
-  aaslot17: Section[] = [];
+  slots: Slot[] = [
+    new Slot(1, 'MW', "09:00","10:45",[],"AbuDhabi"),
+    new Slot(2, 'MW', "10:55","12:40",[],"AbuDhabi"),
+    new Slot(3, 'MW', "12:50","14:35",[],"AbuDhabi"),
+    new Slot(4, 'MW', "15:00","16:45",[],"AbuDhabi"),
+    new Slot(5, 'MW', "16:55","18:40",[],"AbuDhabi"),
+    new Slot(6, 'MW', "18:50","20:35",[],"AbuDhabi"),
+    new Slot(7, 'MW', "20:45","22:30",[],"AbuDhabi"),
+    new Slot(8, 'TR', "09:00","10:45",[],"AbuDhabi"),
+    new Slot(9, 'TR', "10:55","12:40",[],"AbuDhabi"),
+    new Slot(10, 'TR', "12:50","14:35",[],"AbuDhabi"),
+    new Slot(11, 'TR', "15:00","16:45",[],"AbuDhabi"),
+    new Slot(12, 'TR', "16:55","18:40",[],"AbuDhabi"),
+    new Slot(13, 'TR', "18:50","20:35",[],"AbuDhabi"),
+    new Slot(14, 'TR', "20:45","22:30",[],"AbuDhabi"),
+    new Slot(15, 'F', "09:00","12:30",[],"AbuDhabi"),
+    new Slot(16, 'F', "03:00","18:40",[],"AbuDhabi"),
+    new Slot(17, 'F', "18:50","10:30",[],"AbuDhabi"),
+    new Slot(1, 'MW', "09:00","10:45",[],"AlAin"),
+    new Slot(2, 'MW', "10:55","12:40",[],"AlAin"),
+    new Slot(3, 'MW', "12:50","14:35",[],"AlAin"),
+    new Slot(4, 'MW', "15:00","16:45",[],"AlAin"),
+    new Slot(5, 'MW', "16:55","18:40",[],"AlAin"),
+    new Slot(6, 'MW', "18:50","20:35",[],"AlAin"),
+    new Slot(7, 'MW', "20:45","22:30",[],"AlAin"),
+    new Slot(8, 'TR', "09:00","10:45",[],"AlAin"),
+    new Slot(9, 'TR', "10:55","12:40",[],"AlAin"),
+    new Slot(10, 'TR', "12:50","14:35",[],"AlAin"),
+    new Slot(11, 'TR', "15:00","16:45",[],"AlAin"),
+    new Slot(12, 'TR', "16:55","18:40",[],"AlAin"),
+    new Slot(13, 'TR', "18:50","20:35",[],"AlAin"),
+    new Slot(14, 'TR', "20:45","22:30",[],"AlAin"),
+    new Slot(15, 'F', "09:00","12:30",[],"AlAin"),
+    new Slot(16, 'F', "03:00","18:40",[],"AlAin"),
+    new Slot(17, 'F', "18:50","10:30",[],"AlAin"),
+  ];
+
 
   constructor(private programService: CENProgramService){}
   
