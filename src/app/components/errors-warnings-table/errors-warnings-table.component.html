@@ -1,21 +1,75 @@
 <div class="errors-container">
     <h3>Errors & Warnings</h3>
-    <table class="pure-table">
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let error of errors" class="error">
-          <td>Error</td>
-          <td>{{ error }}</td>
-        </tr>
-        <tr *ngFor="let warning of warnings" class="warning">
-          <td>Warning</td>
-          <td>{{ warning }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+
+    <div *ngIf="uncoveredCourses.length > 0">
+        <h4>Uncovered Courses</h4>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let error of uncoveredCourses" class="error">
+                    <td>Error</td>
+                    <td>{{ error }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="facultyLoadIssues.length > 0">
+        <h4>Faculty Load Issues</h4>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let warning of facultyLoadIssues" class="warning">
+                    <td>Warning</td>
+                    <td>{{ warning }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="facultyConflicts.length > 0">
+        <h4>Faculty Scheduling Conflicts</h4>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let conflict of facultyConflicts" [class.error]="conflict.includes('Error')" [class.warning]="conflict.includes('Warning')">
+                    <td>{{ conflict.includes('Error') ? 'Error' : 'Warning' }}</td>
+                    <td>{{ conflict }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="cohortOverloads.length > 0">
+        <h4>Cohort Overload</h4>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let warning of cohortOverloads" class="warning">
+                    <td>Warning</td>
+                    <td>{{ warning }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
