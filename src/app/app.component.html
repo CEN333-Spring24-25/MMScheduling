@@ -5,7 +5,7 @@
         <div *ngFor="let slot of slots | filter: { campus: columnFilter.campus, days: columnFilter.days }" cdkDropList [cdkDropListData]="slot.sections" class="drop-list pure-u-1-8 {{slot.days}}" (cdkDropListDropped)="drop($event)">
           <h3>Slot {{slot.code}} {{slot.days}} {{slot.starttime}} to {{slot.endtime}}</h3>
           <div *ngFor="let section of slot.sections" cdkDrag class="draggable-item">
-            {{ section.num }} - {{ section.course.title }} ({{ section.faculty.name }})  
+            {{ section.campus }} {{ section.num }} - {{ section.course.title }} ({{ section.faculty.name }})  
           </div>
         </div>
   </div>
@@ -13,7 +13,7 @@
     <div cdkDropList [cdkDropListData]="needsList" class="drop-list pure-u-1-2 sectionneeds" (cdkDropListDropped)="drop($event)">
       <h3>Section Needs</h3>
       <div *ngFor="let section of needsList" cdkDrag class="draggable-item">
-        {{ section.num }} - {{ section.course.title }} ({{ section.faculty.name }})  
+        {{ section.campus }} {{ section.num }} - {{ section.course.title }} ({{ section.faculty.name }})  
       </div>
     </div>
 
@@ -43,8 +43,8 @@
         </div>
     
         <div *ngIf="sections.length > 0"  class="pure-control-group">
-          <h3>Section Details</h3>
-          <div *ngFor="let section of sections; let i = index"  class="pure-control-group">
+          <h3>Sections Details</h3>
+          <div *ngFor="let section of sections; let i = index" style="border-color: 1px;" class="pure-control-group">
             <label for="campus{{ i }}">Campus</label>
             <select id="campus{{ i }}" [(ngModel)]="section.campus" [ngModelOptions]="{standalone: true}">
               <option *ngFor="let campus of campuses" [value]="campus">{{ campus }}</option>
@@ -53,6 +53,11 @@
             <select id="num{{ i }}" [(ngModel)]="section.num" [ngModelOptions]="{standalone: true}">
               <option *ngFor="let num of nums" [value]="num">{{ num }}</option>
             </select>
+            <label for="faculty{{ i }}">Faculty</label>
+            <select id="faculty{{ i }}" [(ngModel)]="section.faculty.name" [ngModelOptions]="{standalone: true}">
+              <option *ngFor="let member of faculty" [value]="member">{{ member }}</option>
+            </select>
+            <p>--------------------------------------------------------</p>
           </div>
         </div>
         <div class="pure-controls" *ngIf="sections.length > 0">

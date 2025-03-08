@@ -18,9 +18,10 @@ import { FilterPipe } from './filters/filter.pipe';
 })
 export class AppComponent {
   selectedCourse: Course | null = null;
-  numSections: number = 0;
+  numSections: number = 1;
   sections: Section[] = [];
   nums: string[] = ['1','2','3','4','5','6','7','51','52','53','54','55','56','57','22/66','33/77','44/88','55/99'];
+  faculty: string[] = ['Ghazal','Maha'];
   campuses = ['AbuDhabi', 'AlAin'];
   columnFilters = [{"campus":"AbuDhabi", "days":"MW"},
                    {"campus":"AbuDhabi", "days":"TR"},
@@ -74,7 +75,8 @@ export class AppComponent {
   ];
 
 
-  constructor(private programService: CENProgramService){}
+  constructor(private programService: CENProgramService){
+  }
   
   ngOnInit(): void {}
 
@@ -91,7 +93,7 @@ export class AppComponent {
   onAddSections(): void {
     if (this.selectedCourse && this.numSections > 0) {
       for (let i = 1; i <= this.numSections; i++) {
-        this.sections.push(new Section(this.nums[i], this.selectedCourse, new Faculty("-1","TBA",100,0,"UK"), "AD"));
+        this.sections.push(new Section(this.nums[i], this.selectedCourse, new Faculty("-1","TBD",100,0,"UK"), "AD"));
       }
     }
   }
