@@ -1,0 +1,23 @@
+<h3>Faculty Workload and Travels</h3>
+<table class="pure-table">
+  <thead>
+    <tr>
+      <th>Faculty</th>
+      <th>Release</th>
+      <th>Load</th>
+      <th>Travels</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let member of faculty">
+      <td>{{ member.id }} - {{ member.name }}</td>
+      <td>{{ member.release }}</td>
+      <td [ngClass]="{'overload': member.load > (12 - member.release)}">
+        {{ member.load }}
+      </td>
+      <td [ngClass]="{'overload-travel': member.travels > 2}">
+        {{ member.travels }}
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,10 @@
+.overload {
+    background-color: #ffcccc !important; /* Light Red */
+    font-weight: bold;
+    color: #900; /* Darker red text */
+  }
+  .overload-travel {
+    background-color: #ffcccc !important;
+    font-weight: bold;
+    color: #900; /* Darker red text */
+  }

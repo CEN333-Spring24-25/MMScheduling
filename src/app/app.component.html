@@ -22,9 +22,13 @@
         <fieldset>
         <div class="pure-control-group">
           <label for="courses">Course:</label>
-          <select id="courses" (change)="onCourseSelect($event)"> 
-            <option *ngFor="let course of courses" [ngValue]="course" >{{ course.title }}</option>
-          </select>
+          <select id="courses" [(ngModel)]="selectedCourse" (change)="onCourseSelect($event)" [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="null" disabled selected>Select a Course</option> 
+            <option *ngFor="let course of courses" [ngValue]="course">{{ course.title }}</option>
+        </select>
+        
+        
+
         </div>
         <div *ngIf="selectedCourse"  class="pure-control-group">
           <label for="numSections">How many?</label>
@@ -42,30 +46,48 @@
           <button (click)="onAddSections()">Add Sections</button>
         </div>
     
-        <div *ngIf="sections.length > 0"  class="pure-control-group">
+        <div *ngIf="sections.length > 0" class="pure-control-group">
           <h3>Sections Details</h3>
-          <div *ngFor="let section of sections; let i = index" style="border-color: 1px;" class="pure-control-group">
-            <label for="campus{{ i }}">Campus</label>
-            <select id="campus{{ i }}" [(ngModel)]="section.campus" [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let campus of campuses" [value]="campus">{{ campus }}</option>
-            </select>
-            <label for="num{{ i }}">Number</label>
-            <select id="num{{ i }}" [(ngModel)]="section.num" [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let num of nums" [value]="num">{{ num }}</option>
-            </select>
-            <label for="faculty{{ i }}">Faculty</label>
-            <select id="faculty{{ i }}" [(ngModel)]="section.faculty.name" [ngModelOptions]="{standalone: true}">
-              <option *ngFor="let member of faculty" [value]="member">{{ member }}</option>
-            </select>
-            <p>--------------------------------------------------------</p>
+        
+          <div *ngFor="let section of sections; let i = index" class="section-container">
+            
+            <div class="field-group">
+              <label for="campus{{ i }}">Campus</label>
+              <select id="campus{{ i }}" [(ngModel)]="section.campus" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let campus of campuses" [value]="campus">{{ campus }}</option>
+              </select>
+            </div>
+        
+            <div class="field-group">
+              <label for="num{{ i }}">Number</label>
+              <select id="num{{ i }}" [(ngModel)]="section.num" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let num of nums" [value]="num">{{ num }}</option>
+              </select>
+            </div>
+        
+            <div class="field-group">
+              <label for="faculty{{ i }}">Faculty</label>
+              <select id="faculty{{ i }}" [(ngModel)]="section.faculty" [ngModelOptions]="{standalone: true}">
+                <option value="" disabled selected>Select a Faculty</option> <!-- Empty Default Option -->
+                <option *ngFor="let member of faculty" [ngValue]="member">{{ member.name }}</option>
+              </select>
+            </div>
+        
+            <hr> <!-- Separator between sections -->
+        
           </div>
         </div>
+        
         <div class="pure-controls" *ngIf="sections.length > 0">
           <button (click)="onAddToNeedsList()">Add</button>
         </div>
         </fieldset>
       </form>
+      
     </div>
-
+    <div >
+      <app-faculty-load [faculty]="faculty"></app-faculty-load>
+    </div>
+    
   </div>
 </div>
