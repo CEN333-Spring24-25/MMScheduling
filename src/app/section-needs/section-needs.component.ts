@@ -26,10 +26,8 @@ export class SectionNeedsComponent implements OnInit {
   selectedCourse: Course | null = null;
   numSections: number = 0;
   sections: Section[] = [];
-  facultyList: Faculty[] = [
-    new Faculty('F001', 'Dr. John Doe', 20, 10, 'Abu Dhabi'),
-    new Faculty('F002', 'Dr. Jane Smith', 20, 10, 'Al-Ain')
-  ];
+  nums: string[] = ['1','2','3','4','5','6','7','51','52','53','54','55','56','57','22/66','33/77','44/88','55/99'];
+
 
   selectedFaculty: Faculty | null = null;
   campuses = ['Abu Dhabi', 'Al-Ain'];
