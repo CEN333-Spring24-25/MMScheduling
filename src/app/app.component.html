@@ -22,10 +22,11 @@
         <fieldset>
         <div class="pure-control-group">
           <label for="courses">Course:</label>
-          <select id="courses" [(ngModel)]="selectedCourse" (change)="onCourseSelect($event)" [ngModelOptions]="{standalone: true}">
-            <option [ngValue]="null" disabled selected>Select a Course</option> 
-            <option *ngFor="let course of courses" [ngValue]="course">{{ course.title }}</option>
-        </select>
+          <select id="courses" [(ngModel)]="selectedCourse" (change)="onCourseSelect()" [ngModelOptions]="{standalone: true}">
+              <option [ngValue]="null" disabled>Select a Course</option> 
+              <option *ngFor="let course of courses" [ngValue]="course">{{ course.title }}</option>
+          </select>
+
         
         
 

@@ -46,10 +46,7 @@ export class FacultyLoader {
         this.facultyList = Object.entries(snapshot.val()).map(([id, data]: [string, any]) => {
           return new Faculty(id, data.name, data.load, data.release, data.campus, data.travels);
         });
-        console.log('aculty list loaded from Firebase:', this.facultyList);
-      } else {
-        console.warn('⚠️ No faculty data found in Firebase.');
-      }
+      } 
     } catch (error) {
       console.error('Error fetching faculty from Firebase:', error);
     }
@@ -65,7 +62,6 @@ export class FacultyLoader {
         campus: faculty.campus,
         travels: faculty.travels
       });
-      console.log(`Updated faculty ${faculty.name} in Firebase`);
     } catch (error) {
       console.error('Error updating faculty in Firebase:', error);
     }
@@ -85,7 +81,6 @@ export class FacultyLoader {
       }, {} as Record<string, any>);
 
       await set(ref(db, 'faculty'), facultyUpdates);
-      console.log('Faculty list updated in Firebase successfully');
     } catch (error) {
       console.error('Error updating faculty list in Firebase:', error);
     }
