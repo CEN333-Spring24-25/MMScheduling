@@ -283,7 +283,6 @@ export class AppComponent implements OnInit {
         await this.updateSectionNeedsInFirebase();
       }
 
-      // Find the slot where the section is being added
       const targetSlot = this.slots.find(
         (slot) => slot.sections === event.container.data
       );
@@ -302,14 +301,10 @@ export class AppComponent implements OnInit {
         event.currentIndex
       );
 
-      // Ensure the slot is updated properly
       targetSlot.sections = event.container.data;
-
-      // Update Firebase with new slots
       await this.updateSlotsInFirebase();
     }
 
-    // Update faculty travels
     this.updateFacultyTravels();
   }
 
@@ -380,4 +375,30 @@ export class AppComponent implements OnInit {
       console.error('Error updating slots in Firebase:', error);
     }
   }
+
+  async resetDatabase(): Promise<void> {
+    const db = getDatabase();
+    try {
+      console.log('Resetting Database...');
+  
+      await set(ref(db, 'slots'), {});
+      await set(ref(db, 'sectionNeeds'), {});
+      await set(ref(db, 'faculty'), {});
+  
+      console.log('Database cleared. Reinitializing data...');
+  
+      await this.slotsLoader.initializeSlotsInFirebase();
+      this.slots = await this.slotsLoader.loadSlotsFromFirebase();
+      this.faculty = await this.facultyLoader.fetchFacultyFromFirebase();
+      this.needsList = [];
+  
+      await this.updateSectionNeedsInFirebase();
+      await this.updateSlotsInFirebase();
+  
+      console.log('Database Reset Completed Successfully');
+    } catch (error) {
+      console.error('Error resetting database:', error);
+    }
+  }
+  
 }
