@@ -26,6 +26,7 @@ import { FacultyLoadComponent } from './components/faculty-load/faculty-load.com
 import { getDatabase, ref, get, update, set } from 'firebase/database';
 import { SlotsLoader } from './services/DataLoaders/slotsLoader';
 import { ErrorsWarningsTableComponent } from './components/errors-warnings-table/errors-warnings-table.component';
+import { ActionItemsComponent } from './components/action-items/action-items.component';
 
 @Component({
   selector: 'app-root',
@@ -36,7 +37,8 @@ import { ErrorsWarningsTableComponent } from './components/errors-warnings-table
     FormsModule,
     FilterPipe,
     FacultyLoadComponent,
-    ErrorsWarningsTableComponent
+    ErrorsWarningsTableComponent,
+    ActionItemsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -83,6 +85,11 @@ export class AppComponent implements OnInit {
   needsList: Section[] = [];
   courses: Course[] = [];
   slots: Slot[] = [];
+  versions: string[] = [];
+  selectedVersion1: string = '';
+  selectedVersion2: string = '';
+  comparisonResults: string[] = [];
+  scheduleDifferences: string[] = [];
 
   constructor(
     private slotsLoader: SlotsLoader,
@@ -121,7 +128,121 @@ export class AppComponent implements OnInit {
 
     await this.updateSectionNeedsInFirebase();
     this.loadOfferedCourses();
+    await this.loadAvailableVersions();
   }
+  async saveVersion(): Promise<void> {
+    const db = getDatabase();
+    const versionNumber = `v${this.versions.length + 1}`;
+    
+    try {
+      await set(ref(db, `scheduleVersions/${versionNumber}`), this.slots);
+      console.log(`Schedule saved as ${versionNumber}`);
+      this.versions.push(versionNumber);
+    } catch (error) {
+      console.error('Error saving schedule version:', error);
+    }
+  }
+  async loadAvailableVersions(): Promise<void> {
+    const db = getDatabase();
+    try {
+      const snapshot = await get(ref(db, 'scheduleVersions'));
+      if (snapshot.exists()) {
+        this.versions = Object.keys(snapshot.val());
+        
+      }
+    } catch (error) {
+      console.error('Error loading schedule versions:', error);
+    }
+  }
+  async compareSchedules() {
+    if (!this.selectedVersion1 || !this.selectedVersion2) {
+        console.error("Error: Both versions must be selected.");
+        return;
+    }
+
+    try {
+        let db = getDatabase();
+        let version1Ref = ref(db, `scheduleVersions/${this.selectedVersion1}`);
+        let version2Ref = ref(db, `scheduleVersions/${this.selectedVersion2}`);
+
+        let [version1Snapshot, version2Snapshot] = await Promise.all([
+            get(version1Ref),
+            get(version2Ref)
+        ]);
+
+        let schedule1: Slot[] = version1Snapshot.exists() ? Object.values(version1Snapshot.val()) : [];
+        let schedule2: Slot[] = version2Snapshot.exists() ? Object.values(version2Snapshot.val()) : [];
+
+        if (schedule1.length === 0 || schedule2.length === 0) {
+            console.error("Error: One or both schedules are missing or empty.");
+            return;
+        }
+
+        this.scheduleDifferences = this.getScheduleDifferences(schedule1, schedule2);
+        console.log("Schedule Differences:", this.scheduleDifferences);
+    } catch (error) {
+        console.error("Error comparing schedules:", error);
+    }
+}
+
+
+private getScheduleDifferences(schedule1: Slot[], schedule2: Slot[]): string[] {
+  let changes: string[] = [];
+
+  let slotMap1 = new Map(schedule1.map(slot => [slot.code, slot]));
+  let slotMap2 = new Map(schedule2.map(slot => [slot.code, slot]));
+
+  schedule1 = Object.values(schedule1);
+  schedule2 = Object.values(schedule2);
+  
+  console.log("Schedule 1:", schedule1);
+  console.log("Schedule 2:", schedule2);
+
+  schedule1.forEach(slot1 => {
+      let slot2 = slotMap2.get(slot1.code);
+
+      let sections1 = slot1.sections || []; // Ensure sections1 is an array
+
+      if (slot2) {
+          let sections2 = slot2.sections || []; // Ensure sections2 is an array
+
+          sections1.forEach(section1 => {
+              let section2 = sections2.find(s => s.course.code === section1.course.code);
+              
+              if (!section2) {
+                  changes.push(`Removed course ${section1.course.code} from ${slot1.days} ${slot1.starttime}-${slot1.endtime}`);
+              }
+          });
+      } else {
+          sections1.forEach(section => {
+              changes.push(`Removed course ${section.course.code} from ${slot1.days} ${slot1.starttime}-${slot1.endtime}`);
+          });
+      }
+  });
+
+  schedule2.forEach(slot2 => {
+      let slot1 = slotMap1.get(slot2.code);
+
+      let sections2 = slot2.sections || []; // Ensure sections2 is an array
+
+      sections2.forEach(section2 => {
+          if (slot1) {
+              let sections1 = slot1.sections || []; // Ensure sections1 is an array
+
+              let section1 = sections1.find(s => s.course.code === section2.course.code);
+
+              if (!section1) {
+                  changes.push(`Assigned course ${section2.course.code} to ${slot2.days} ${slot2.starttime}-${slot2.endtime}`);
+              }
+          } else {
+              changes.push(`Assigned course ${section2.course.code} to ${slot2.days} ${slot2.starttime}-${slot2.endtime}`);
+          }
+      });
+  });
+
+  return changes;
+}
+
 
   loadOfferedCourses(): void {
     let allPrograms: Program[] = [
@@ -400,5 +521,7 @@ export class AppComponent implements OnInit {
       console.error('Error resetting database:', error);
     }
   }
+
+
   
 }

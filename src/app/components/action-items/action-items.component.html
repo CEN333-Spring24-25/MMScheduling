@@ -1,0 +1,6 @@
+<div *ngIf="comparisonResults.length > 0">
+    <h3>Schedule Changes</h3>
+    <ul>
+        <li *ngFor="let change of comparisonResults">{{ change }}</li>
+    </ul>
+</div>

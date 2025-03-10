@@ -26,10 +26,6 @@
               <option [ngValue]="null" disabled>Select a Course</option> 
               <option *ngFor="let course of courses" [ngValue]="course">{{ course.title }}</option>
           </select>
-
-        
-        
-
         </div>
         <div *ngIf="selectedCourse"  class="pure-control-group">
           <label for="numSections">How many?</label>
@@ -96,5 +92,28 @@
     <div >
     <app-errors-warnings-table [courses]="courses" [needsList]="needsList" [slots]="slots" [faculty]="faculty"></app-errors-warnings-table>
   </div>
+  <button (click)="saveVersion()" class="my-btn">Save Version</button>
+  <h3 class="compare-title">Compare Schedules</h3>
+
+<div class="compare-container">
+  <div class="compare-select">
+    <label for="version1">Version 1:</label>
+    <select id="version1" [(ngModel)]="selectedVersion1" class="styled-select">
+      <option *ngFor="let version of versions" [value]="version">{{ version }}</option>
+    </select>
+  </div>
+
+  <div class="compare-select">
+    <label for="version2">Version 2:</label>
+    <select id="version2" [(ngModel)]="selectedVersion2" class="styled-select">
+      <option *ngFor="let version of versions" [value]="version">{{ version }}</option>
+    </select>
+  </div>
+</div>
+
+  <button (click)="compareSchedules()" class="my-btn">Compare</button>
+  
+  <app-action-items [comparisonResults]="scheduleDifferences"></app-action-items>
+  
   </div>
 </div>
