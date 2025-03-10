@@ -77,4 +77,24 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Cohort Scheduling Conflicts -->
+    <div *ngIf="cohortConflicts.length > 0">
+        <h4>Cohort Scheduling Conflicts</h4>
+        <table class="pure-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let conflict of cohortConflicts"
+                    [ngClass]="{'error': conflict.type === 'Error', 'warning': conflict.type === 'Warning'}">
+                    <td>{{ conflict.type }}</td>
+                    <td>{{ conflict.message }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

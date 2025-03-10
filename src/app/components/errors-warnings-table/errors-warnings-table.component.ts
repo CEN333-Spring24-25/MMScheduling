@@ -11,6 +11,7 @@ import { FacultyCampusConflictService } from '../../services/ErrorCheckingServic
 import { CohortOverloadService } from '../../services/ErrorCheckingServices/CohortOverloadService';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CohortConflictsService } from '../../services/ErrorCheckingServices/CohortConflictService';
 
 @Component({
   selector: 'app-errors-warnings-table',
@@ -30,13 +31,15 @@ export class ErrorsWarningsTableComponent implements OnChanges {
   facultyLoadIssues: ErrorDetail[] = [];
   facultyConflicts: ErrorDetail[] = [];
   cohortOverloads: ErrorDetail[] = [];
+  cohortConflicts: ErrorDetail[] = [];
 
   constructor(
     private uncoveredCoursesService: UncoveredCoursesService,
     private facultyLoadService: FacultyLoadService,
     private facultyTimeConflictService: FacultyTimeConflictService,
     private facultyCampusConflictService: FacultyCampusConflictService,
-    private cohortOverloadService: CohortOverloadService
+    private cohortOverloadService: CohortOverloadService,
+    private cohortConflictsService: CohortConflictsService // Inject the service
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -44,17 +47,13 @@ export class ErrorsWarningsTableComponent implements OnChanges {
   }
 
   checkErrorsAndWarnings(): void {
-    this.errors = [
-      ...this.uncoveredCoursesService.checkUncoveredCourses(this.courses, this.slots, this.needsList),
-      ...this.facultyLoadService.checkFacultyLoad(this.faculty),
+    this.uncoveredCourses = this.uncoveredCoursesService.checkUncoveredCourses(this.courses, this.slots, this.needsList);
+    this.facultyLoadIssues = this.facultyLoadService.checkFacultyLoad(this.faculty);
+    this.facultyConflicts = [
       ...this.facultyTimeConflictService.checkFacultyTimeConflicts(this.slots),
       ...this.facultyCampusConflictService.checkFacultyCampusConflicts(this.slots, this.faculty),
-      ...this.cohortOverloadService.checkCohortOverload(this.slots),
     ];
-
-    this.uncoveredCourses = this.errors.filter(e => e.type === 'Error' && e.message.includes('not covered'));
-    this.facultyLoadIssues = this.errors.filter(e => e.type === 'Warning' && (e.message.includes('underloaded') || e.message.includes('overloaded')));
-    this.facultyConflicts = this.errors.filter(e => e.message.includes('scheduling conflict') || e.message.includes('assigned to both'));
-    this.cohortOverloads = this.errors.filter(e => e.type === 'Warning' && e.message.includes('Cohort'));
+    this.cohortOverloads = this.cohortOverloadService.checkCohortOverload(this.slots);
+    this.cohortConflicts = this.cohortConflictsService.checkCohortConflicts(this.slots); // Call the cohort conflicts service
   }
 }
