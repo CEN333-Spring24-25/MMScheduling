@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { getDatabase, ref, get, set, update } from 'firebase/database';
-import { Slot } from '../data/slot';
+import { Slot } from '../../data/slot';
 
 @Injectable({
   providedIn: 'root'

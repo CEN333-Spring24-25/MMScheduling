@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Program } from '../data/program';
+import { Program } from '../../data/program';
 import { CENProgramService } from './CENProgramService';
 import { EENProgramService } from './EENProgramService';
 import { BMEProgramService } from './BMEProgramService';

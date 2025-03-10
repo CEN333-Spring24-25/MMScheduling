@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Faculty } from '../data/faculty';
+import { Faculty } from '../../data/faculty';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, get, update, set } from 'firebase/database';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 const firebaseApp = initializeApp(environment.firebaseConfig);
 const db = getDatabase(firebaseApp);

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Semester } from '../data/semester';
-import { Course } from '../data/course';
+import { Semester } from '../../data/semester';
+import { Course } from '../../data/course';
 
 @Injectable({
   providedIn: 'root'

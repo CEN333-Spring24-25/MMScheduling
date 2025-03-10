@@ -1,6 +1,7 @@
 <div class="errors-container">
     <h3>Errors & Warnings</h3>
 
+    <!-- Uncovered Courses -->
     <div *ngIf="uncoveredCourses.length > 0">
         <h4>Uncovered Courses</h4>
         <table class="pure-table">
@@ -12,13 +13,14 @@
             </thead>
             <tbody>
                 <tr *ngFor="let error of uncoveredCourses" class="error">
-                    <td>Error</td>
-                    <td>{{ error }}</td>
+                    <td>{{ error.type }}</td>
+                    <td>{{ error.message }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- Faculty Load Issues -->
     <div *ngIf="facultyLoadIssues.length > 0">
         <h4>Faculty Load Issues</h4>
         <table class="pure-table">
@@ -30,13 +32,14 @@
             </thead>
             <tbody>
                 <tr *ngFor="let warning of facultyLoadIssues" class="warning">
-                    <td>Warning</td>
-                    <td>{{ warning }}</td>
+                    <td>{{ warning.type }}</td>
+                    <td>{{ warning.message }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- Faculty Scheduling Conflicts -->
     <div *ngIf="facultyConflicts.length > 0">
         <h4>Faculty Scheduling Conflicts</h4>
         <table class="pure-table">
@@ -47,14 +50,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let conflict of facultyConflicts" [class.error]="conflict.includes('Error')" [class.warning]="conflict.includes('Warning')">
-                    <td>{{ conflict.includes('Error') ? 'Error' : 'Warning' }}</td>
-                    <td>{{ conflict }}</td>
+                <tr *ngFor="let conflict of facultyConflicts"
+                    [ngClass]="{'error': conflict.type === 'Error', 'warning': conflict.type === 'Warning'}">
+                    <td>{{ conflict.type }}</td>
+                    <td>{{ conflict.message }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
+    <!-- Cohort Overload -->
     <div *ngIf="cohortOverloads.length > 0">
         <h4>Cohort Overload</h4>
         <table class="pure-table">
@@ -66,8 +71,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let warning of cohortOverloads" class="warning">
-                    <td>Warning</td>
-                    <td>{{ warning }}</td>
+                    <td>{{ warning.type }}</td>
+                    <td>{{ warning.message }}</td>
                 </tr>
             </tbody>
         </table>

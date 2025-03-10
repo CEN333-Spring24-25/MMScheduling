@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Program } from '../data/program';
-import { SemesterLoader } from './semesterLoader';
-import { OfferingsLoader } from './offeringsLoader';
+import { Program } from '../../data/program';
+import { SemesterLoader } from '../DataLoaders/semesterLoader';
+import { OfferingsLoader } from '../DataLoaders/offeringsLoader';
 
 @Injectable({
     providedIn: 'root'

@@ -7,15 +7,15 @@ import {
   moveItemInArray,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
-import { OfferingsLoader } from './services/offeringsLoader';
-import { FacultyLoader } from './services/facultyLoader';
-import { CENProgramService } from './services/CENProgramService';
-import { EENProgramService } from './services/EENProgramService';
-import { EENROProgramService } from './services/EENROProgramService';
-import { RSNProgramService } from './services/RSNProgramService';
-import { BMEProgramService } from './services/BMEProgramService';
-import { AINProgramService } from './services/AINProgramService';
-import { CENAIProgramService } from './services/CENAIProgramService';
+import { OfferingsLoader } from './services/DataLoaders/offeringsLoader';
+import { FacultyLoader } from './services/DataLoaders/facultyLoader';
+import { CENProgramService } from './services/ProgramServices/CENProgramService';
+import { EENProgramService } from './services/ProgramServices/EENProgramService';
+import { EENROProgramService } from './services/ProgramServices/EENROProgramService';
+import { RSNProgramService } from './services/ProgramServices/RSNProgramService';
+import { BMEProgramService } from './services/ProgramServices/BMEProgramService';
+import { AINProgramService } from './services/ProgramServices/AINProgramService';
+import { CENAIProgramService } from './services/ProgramServices/CENAIProgramService';
 import { Course } from './data/course';
 import { Faculty } from './data/faculty';
 import { Section } from './data/section';
@@ -24,7 +24,7 @@ import { Program } from './data/program';
 import { FilterPipe } from './filters/filter.pipe';
 import { FacultyLoadComponent } from './components/faculty-load/faculty-load.component';
 import { getDatabase, ref, get, update, set } from 'firebase/database';
-import { SlotsLoader } from './services/slotsLoader';
+import { SlotsLoader } from './services/DataLoaders/slotsLoader';
 import { ErrorsWarningsTableComponent } from './components/errors-warnings-table/errors-warnings-table.component';
 
 @Component({
